@@ -71,38 +71,31 @@ var realNinjas = [
   'Michelle Yeoh',
   'Jet Li'
 ]
+
 function createListOfObjects(namesList){
-    var splitOne = []
-    var ninjaObjects = [
-    {firstName: "" , lastName:"" },
-    {firstName: "" , lastName:"" },
-    {firstName: "" , lastName:"" },
-    {firstName: "" , lastName:"" },
-    {firstName: "" , lastName:"" },
-    {firstName: "" , lastName:"" }
-  ]
+    var ninjaPlease = []
 
-  for(var i = 0; i < realNinjas.length; i++){
+  for(var i = 0; i < namesList.length; i++){
 
-     splitOne.push(namesList[i])
+    var ninjaObj = {};
 
-   ninjaObjects[i].firstName = (namesList[i].split(' ')[0])
-   ninjaObjects[i].lastName = (namesList[i].split(' ')[1])
+    var ninjaNames = namesList[i];
+        ninjaNames = ninjaNames.split(' ');
+        ninjaObj.firstName = ninjaNames[0];
+        ninjaObj.lastName = ninjaNames[1];
+        ninjaPlease.push(ninjaObj)
 
- }
+  }
 
-  return ninjaListOfObjects
+  return ninjaPlease;
 }
 
 var ninjaListOfObjects = createListOfObjects(realNinjas)
-
 
 console.assert(typeof ninjaListOfObjects[0] === "object")
 console.assert(ninjaListOfObjects[0].firstName === "Chuck")
 console.assert(ninjaListOfObjects[1].lastName === "Chan")
 console.assert(ninjaListOfObjects[3].firstName === "Billy")
-
-
 
 // Part 3
 
@@ -111,24 +104,36 @@ console.assert(ninjaListOfObjects[3].firstName === "Billy")
 // (which is, almost, what this is) should take a name input, and the dog should receive the
 // assigned name
 
-var dogObject = [
-  {name:'',
-   legs:4,
-   weight:'',
-   color:''
+    var dogObject = [
+      {
+        name:'',
+       legs:4,
+       weight:'',
+       color:''
+      }
+    ]
+
+  function generateDog(dog){
+     dogObject.name = dog
+     dogObject.legs = 4
+     dogObject.weight = 165
+     dogObject.color = "red"
+     dogObject.speak = function(speakString) {
+         var WordsArr = speakString.split(' ')
+
+         var dogSentence = []
+         for (var i = 0; i < WordsArr.length; i++) {
+           var singleWord = WordsArr[i]
+           var letters = singleWord.split('')
+           letters[0] = "r"
+           var woofWord = letters.join('')
+           dogSentence.push(woofWord)
+        }
+        var dogSentence = dogSentence.join(' ')
+        return dogSentence
+     }
+    return dogObject
   }
-]
-function generateDog(dog){
-   dogObject.name = dog
-   dogObject.legs = 4
-   dogObject.weight = 165
-   dogObject.color = "red"
-
-
-return dogObject
-}
-
-
 var dog = generateDog('rex')
 
 console.assert(dog.legs === 4)
@@ -137,30 +142,16 @@ console.assert(dog.name === 'rex')
 var dog = generateDog('carl')
 console.assert(dog.name === 'carl')
 
+console.assert(dog.speak('i love you') === 'r rove rou')
+console.assert(dog.speak('so hungry') === 'ro rungry')
 
 // Give the dog a method called .speak(). speak() should receive a string as input and
 // return a new version of that string where the first letter of every word is replaced
 // with the letter 'r'.
-var dogObject = [
-  {name:'',
-   legs:4,
-   weight:'',
-   color:''
-  }
-]
-function generateDog(dog){
-   dogObject.name = dog
-   dogObject.legs = 4
-   dogObject.weight = 165
-   dogObject.color = "red"
- console.log(dogObject)
-
-return dogObject
-}
-
-
-console.assert(dog.speak('i love you') === 'r rove rou')
-console.assert(dog.speak('so hungry') === 'ro rungry')
+// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+// |||||||||||||||||||||||||||||||||||||||||||||||||||
+// console.assert(dog.speak('i love you') === 'r rove rou')
+// console.assert(dog.speak('so hungry') === 'ro rungry')
 
 
 // Part 4
@@ -212,29 +203,22 @@ I need a fake passport, preferably to France. I like the way they think. Oh, COM
 I'm foolish and I'm funny and I'm needy. Am I needy? Are you sure I'm not needy? 'Cause I feel needy sometimes. Obviously this blue part here is the land. \
 Let's see some bananas and nuts! This was a big get for God. They don't allow you to have bees in here. I want to cry so bad, but I don't think I can spare the moisture. No, Pop-pop does not get a treat, I just brought you a [bleep]ing pizza. It walked on my pillow! I'll buy you a hundred George Michaels that you can teach to drive! A group of British builders operating outside the O.C."
 
-var wordFrequencyObject = getCounts(sampleText)
-
-var wordFrequencyObject = getCounts(sampleText)
-
     function getCounts(strOfText){
-
-      var countObj = { }
+      var countObj = {}
 
       var arrayOfWords = strOfText.toLowerCase().split(' ')
-      for(var i = 0; i < strOfText.length; i++){
-        var wordUp = strOfText[i]
+      for(var i = 0; i < arrayOfWords.length; i++){
+
+        var wordUp = arrayOfWords[i]
+
          if(typeof countObj[wordUp] === 'undefined'){
               countObj[wordUp] = 1
         }else{
-         if(typeof countObj[wordUp] !== 'undefined'){
              countObj[wordUp] = countObj[wordUp] + 1
-          }
         }
       }
-    return countObj
+      return countObj
     }
-
-
 
 console.assert( wordFrequencyObject.need === 3 )
 console.assert( wordFrequencyObject.you === 9 )
@@ -256,8 +240,20 @@ var object = {
     apartment_no: "2b",
     structural_integrity: "failing"
 }
+var reversedArray = {}
+
+function reverseObject(object){
+  for (var propA in object){
+     console.log(propA)
+
+   reversedArray[object[propA]] = propA
+  }
+console.log(reversedArray)
+return reversedArray
+}
 
 var reversed = reverseObject(object)
+
 console.assert( reversed['2b'] === 'apartment_no' )
 
 //******************************
